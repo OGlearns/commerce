@@ -1,0 +1,115 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    {% if listing %}
+
+        {% if error %}
+            {{ error }}
+        {% endif %}
+
+        <h2 class="header" id="listing-title"> {{ listing.title }} </h2>
+        
+        <div class=""> 
+
+            <ul style="list-style:none;" >
+                {% if listing.image_url %}
+                <li>
+                    <img class="card-img-left"style="max-width:100px;"src= "{{ listing.image_url.url }}" >
+                </li>
+                {% endif %}
+                Listing Owner: {{ listing.user }}
+                <li>
+                    Category: {{listing.category}}
+                </li>
+                <li>
+                    Description: {{listing.details}}
+                </li>
+                <li>
+                    Starting Price: {{listing.price}}
+                </li>
+            </ul>
+        </div>
+
+        <p>
+            <h3 class="header" id="comments-title">
+                Comments:
+            </h3>
+            {% if comments %}
+                {% for comment in comments %}
+                    <ul class="comments">
+                        <li>
+                            {{ comment }}
+                        </li>
+                    </ul>
+                {% endfor %}
+            {% else %}
+                No comments.
+            {% endif %}
+        </p>
+        
+        {% if user.is_authenticated %}
+            <form action="{% url 'auctions:watchlist' listing.id %}">
+                <button class="btn btn-outline-primary" type="submit" >
+                    {% if listing in watchlist.listings.all %}
+                    <a>
+                        Remove from Watchlist
+                    </a>
+                    {% else %}
+                    <a>
+                        Add to Watchlist
+                    </a>
+                    {% endif %}
+                </button>
+            </form>
+            
+            <form method="POST" action="{% url 'auctions:new_comment' listing.id %}">
+                {% csrf_token %}
+                {{ NewCommentForm.as_p}}
+                <button class="btn btn-outline-primary" type="submit" >
+                    Leave Comment
+                </button>
+            </form>
+
+
+        
+            {% if listing.winner %}
+                This auction is closed. 
+                
+                {% if listing.winner == request.user %}
+                    Congratulations! You are the winner!
+                {% endif %}
+
+                {% if listing.user == request.user %}
+
+                    The winner is: {{ listing.winner }}    
+                {% endif %}
+            {% else %}
+                <form method="POST" action="{% url 'auctions:id' listing.id %}">
+                    {% csrf_token %}
+                    {{ NewBidForm.as_p}}
+                    <button class="btn btn-outline-primary" type="submit">
+                        Place Bid
+                    </button>
+                </form>
+                
+            {% endif %}
+
+                {% if listing.user == user %}
+
+                    <form action="{% url 'auctions:close_listing' listing.id %}">
+                        <button class="btn btn-outline-primary" type="submit">
+                            Close Listing
+                        </button>
+                    </form>
+
+
+
+                {% endif %}
+
+        {% endif %}
+    {% else %}
+        
+        No listing matches this search
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2 class="header" id="listing-title">Watchlist</h2>
+
+    <ul style="list-style:none;">
+
+        {% if watchlist %}
+            
+            {% for listing in watchlist.listings.all %}
+
+                <li>
+
+                    <div class="card listing">
+
+                        <h3>
+                            <a href="{% url 'auctions:id' listing.id %}">
+                                {{ listing.title }}
+                            </a>
+                        </h3>
+
+                        {% if listing.image_url %}
+                            
+                            <img class="card-img-left"style="max-width:100px;"src= "{{ listing.image_url.url }}" >
+                        {% endif %}
+                        <span>
+                            Listing Owner: {{ listing.user }}
+                        </span>
+                        <span>
+
+                            Description: {{ listing.details }}
+                        </span>
+                        <span>
+                            Price: {{ listing.price }}
+
+                            <!-- Highest Bid: {{ bids.listing.highest_bid }} -->
+                        </span>
+                        
+                    </div>
+                </li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+
+{% endblock %}                
