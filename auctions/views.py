@@ -6,6 +6,7 @@ from django.urls import reverse
 from auctions import forms
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import AnonymousUser
 
 from .models import *
 
@@ -77,7 +78,7 @@ def new_listing(request):
         form = forms.NewListingForm(request.POST, request.FILES)
         if form.is_valid():
             listing = form.save(commit=False)
-            listing.user = request.user
+            listing.user = request.user            
             listing.save()
             return HttpResponseRedirect(reverse("auctions:index"))
         
