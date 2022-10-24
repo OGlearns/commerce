@@ -72,8 +72,7 @@ def register(request):
 
 
 def new_listing(request):
-    # Return the user to a page to add a new listing
-
+    # save new listing if it is valid
     if request.method == "POST":
         form = forms.NewListingForm(request.POST, request.FILES)
         if form.is_valid():
@@ -82,6 +81,7 @@ def new_listing(request):
             listing.save()
             return HttpResponseRedirect(reverse("auctions:index"))
         
+    # Return the user to a page to add a new listing
     else:
         return render(request, "auctions/new_listing.html", {
             "new_listing_form" : forms.NewListingForm()
@@ -90,13 +90,7 @@ def new_listing(request):
 
 
 def listing(request, id):
-
-    # Display listing and its details
-
-    # Take the title and search for a listing with that title
-    # if that listing exsists, render it. 
-
-
+    # get requested listing, return listing
     if request.method == "GET":
         if request.user.is_authenticated:
             try:
@@ -128,14 +122,9 @@ def listing(request, id):
             return render(request, "auctions/listing.html", {
                 "listing": listing,
                 "comments":Comment.objects.filter(listings=listing),
-                # "title": listing.title,
-
             })
-        
+    # handle new bid attempt on listing page
     else:
-        # I want to get the bid that the user submitted, and confirm it's acceptable. if so, add bid to db and update listing. else, return error
-        # bid_form = forms.NewBidForm(request.POST or None)
-
         bid_form = forms.NewBidForm(request.POST)
         bid_form.save(commit=False)
 
@@ -175,9 +164,8 @@ def listing(request, id):
                         "NewCommentForm": forms.NewCommentForm(),
                         "comments":Comment.objects.filter(listings=listing)
                 })
-        except Bid.DoesNotExist or None:
+        except Bid.DoesNotExist or None: # FIX TO WATCHLIST.DOESNOTEXIST?
 
-            #compare only to the listing price. no bids
             new_bid = bid_form.cleaned_data['bid']
             if  listing.price > new_bid:
                 bid_form.save(commit=False)
@@ -204,22 +192,14 @@ def listing(request, id):
 @login_required
 def watchlist(request, id):
 
-    # Take the listing currently displayed on the page, and add it to the users watchlist
-
-
     listing = Listing.objects.get(id=id)
-    
+    # try to get users watchlist
     try:
         listing_in_watchlist = WatchList.objects.get(listings= listing,user=request.user)
     except WatchList.DoesNotExist:
         listing_in_watchlist = None
-
-
-    # if listing is in user watchlist
+    #remove listing from watchlist if listing is in users watchlist
     if listing_in_watchlist != None:
-            
-        # IF THE CURRENT LISTING IS NOT IN USERS WATCHLIST
-        # listing = WatchList.objects.get(user=request.user,listings=listing)
         listing_in_watchlist.listings.remove(listing)
         listing_in_watchlist.save()
 
@@ -232,7 +212,7 @@ def watchlist(request, id):
             "comments":Comment.objects.filter(listings=listing)
         })   
     else:
-    # if listing not in user watchlist
+    # if listing not in user watchlist, add listing to watchlist
         try:
             watched_listings = WatchList.objects.get(user=request.user)
         except WatchList.DoesNotExist:
@@ -253,14 +233,14 @@ def watchlist(request, id):
 
 @login_required
 def watchlist_view(request):
-
+    # try to go to users watchlist
     try:
         user_watchlist = WatchList.objects.get(user=request.user)
         return render(request, "auctions/watchlist.html", {
             "watchlist" : user_watchlist,
         })   
-    
-    except WatchList.DoesNotExist:
+    # if user has no watchlist, create one and go to it
+    except WatchList.DoesNotExist:  
         user_watchlist = WatchList(user=request.user)
         user_watchlist.save()
         return render(request, "auctions/watchlist.html", {
@@ -271,9 +251,13 @@ def watchlist_view(request):
 
 @login_required
 def close_listing(request, id):
-    # when user clicks on close, then calculate the highest bid, and set the status to closed instead of active
+
+    # get requested listing
     listing = Listing.objects.get(id=id)
+    # close the listing
     listing.active=False
+
+    # check who the winner is, return it
     try:
         listing_bid = Bid.objects.get(listing=listing)
     except Bid.DoesNotExist:
@@ -297,19 +281,18 @@ def close_listing(request, id):
 
 @login_required
 def new_comment(request, id):
-    # if the user is authenticated
-    # get the form input
-    # validate data
-    # if its clean, store the data in the comments database
-    if request.method == "POST" and request.user.is_authenticated:
+
+    if request.method == "POST":
+        # get listing
         listing = Listing.objects.get(id=id)
+        # instantiate user submitted comment form
         comment_form = forms.NewCommentForm(request.POST)
         comment_form.save(commit=False)
 
+        # save and return comment if valid
         if comment_form.is_valid():
-            # try:
+
             new_comment = Comment.objects.create(listings=listing, user=request.user)
-            # except Comment.DoesNotExist:
 
             new_comment.comment = comment_form.cleaned_data["comment"]
             new_comment.save()
@@ -323,19 +306,15 @@ def new_comment(request, id):
         pass
 
 
+    # get and return a list of the categories
 def categories(request):
-    # i want to display a list of the categories
     categories = sorted(Listing.CATEGORY_CHOICES)
-    # categories = Listing(user=request.user,title="Dummy",details="FooBar",active=False)
-    # I think i need to create an instance, or empty instance first, then return that and display it's choices
     return render(request, "auctions/categories.html", {
         "categories":categories,
     })
 
-
+    # get and return list of listings in each category
 def category_listings(request, category):
-    # I want to get a list of all listings with the category given
-
     listings = Listing.objects.filter(category=category)
     return render(request, "auctions/category_listings.html", {
         "listings":listings,
