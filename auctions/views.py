@@ -281,15 +281,15 @@ def close_listing(request, id):
 
 @login_required
 def new_comment(request, id):
-
+    # get and save new comment if it is valid
     if request.method == "POST":
-        # get listing
+
         listing = Listing.objects.get(id=id)
-        # instantiate user submitted comment form
+
         comment_form = forms.NewCommentForm(request.POST)
         comment_form.save(commit=False)
 
-        # save and return comment if valid
+
         if comment_form.is_valid():
 
             new_comment = Comment.objects.create(listings=listing, user=request.user)
