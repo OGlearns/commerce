@@ -13,6 +13,11 @@ body {
     text-align: center;
 }
 
+.container {
+    padding-left: 20px;
+    margin-top: 20px;
+
+}
 .header {
     color:rgb(96, 96, 96);
     font-size: 24px;
@@ -24,12 +29,12 @@ body {
 }
 
 .nav-link {
-    font-size: small;
+    font-size: medium;
     margin-top: 15px;
 }
 
 .nav-link:hover {
-    font-size:13px;
+    font-size:medium;
     color:rgb(127, 127, 127);
     text-decoration: underline 3px ;
     text-underline-offset: 0.5em;
@@ -40,18 +45,17 @@ body {
     border: none;
     padding: 10px;
     border-radius: 5px;
-    max-width: 750px;
-    /* border-color:rgb(197, 197, 197); */
+    max-width: 1000px;
     margin:10px;
 }
 
-.listing:hover {
-    border:solid 2px;
+/* .listing:hover {
+    border:solid 1px;
     border-color: rgb(211, 211, 211);
-}
+} */
 
 form {
-    margin:55px;
+    margin:30px;
 }
 
 .nav-row {
@@ -70,4 +74,36 @@ form {
     max-width: 1000px;
     margin-left: 40px;
     color:rgb(35, 35, 35);
+}
+
+
+.comment_user {
+
+    padding:0 5px 0 5px;
+    background-color: rgb(122, 122, 122);
+    font-size: x-small;
+    color: white;
+    width: fit-content;    
+    border-radius: 9px;
+    text-align: center;
+}
+
+.watchlist-button {
+
+    background-color: #555555; /* Green */
+    border: none;
+    color: white;
+    padding: 3px 5px;
+    margin: 0 0 0 0;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    border-radius: 9px;
+    text-align: center;
+}
+
+.img-border {
+    height:200px;
+    width: 200px;
 }

@@ -1,46 +1,73 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2 class="header" id="listing-title">Active Listings</h2>
 
-    <ul style="list-style:none;">
-        {% if listings %}
+    <div class="col">
 
+        <h2 class="col header">Active Listings</h2>
+        
+        <ul style="list-style:none;">
+            {% if listings %}
+            
             {% for listing in listings %}
-
-                <li>
-
-                    <div class="card listing">
-
-                        <h3>
-                            <a href="{% url 'auctions:id' listing.id %}">
-                                {{ listing.title }}
-                            </a>
-                        </h3>
+            
+            <div class="card listing" >
+                <li >
+                
+                    <h4>
+                        <a href="{% url 'auctions:id' listing.id %}">
+                            {{ listing.title }}
+                        </a>
+                    </h4>
+                    
+                    <ul>
+                        <h6>
+                            by:
+                            <span style="font-weight: normal; color:gray;">
+                                {{ listing.user }}
+                            </span>
+                        </h6>
 
                         {% if listing.image_url %}
-                            
-                            <img class="card-img-left"style="max-width:100px;"src= "{{ listing.image_url.url }}" >
+
+                            <div class="img-border">
+
+                                <img class="img-thumbnail"style="display:inline-block; height:100%; width:100%;object-fit: contain;"src= "{{ listing.image_url.url }}" >
+                            </div>
                         {% endif %}
-                        <span>
-                            ID: {{ listing.id }}
-                            Description: {{ listing.details }}
-                        </span>
-                        <span>
-                            Price: {{ listing.price }}
+                        <div style="display:inline-block; position:relative;">
 
-                            <!-- Highest Bid: {{ bids.listing.highest_bid }} -->
-                        </span>
-                        
-                    </div>
+                            <h5>
+                                <span>
+                                    ${{ listing.price }}
+                                </span>
+                            </h5>
+                            <h6>
+                                Description: 
+                                <span style="font-weight: normal; color:gray;">
+                                    {{ listing.details }}
+                                </span>
+                            </h6>
+                            <h6>
+                                Category: 
+                                <span style="font-weight: normal; color:gray;">
+                                    {{ listing.category }}
+                                </span>
+                            </h6>
+                        </div>
+                    </ul>
+                    
                 </li>
-            {% endfor %}
-
-        {% else %}
-        
-        Currently no active listings
-
-        {% endif %}
-    </ul>
+            </div>
+            <hr>
+                {% endfor %}
+            
+            {% else %}
+            
+            Currently no active listings
+            
+            {% endif %}
+        </ul>
+    </div>
 
 {% endblock %}                

@@ -1,4 +1,4 @@
-from tkinter import CASCADE
+from tkinter import CASCADE, Image
 from typing_extensions import Required
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -34,10 +34,22 @@ class Listing(models.Model):
         default="NONE",
     )
     created = models.DateTimeField
-    image_url = models.ImageField(null=True, blank=True, upload_to='images/')
+    image_url = models.ImageField(null=True, blank=True, upload_to='images/', editable=True,)
     active = models.BooleanField(default=True)
     time_submitted = models.DateTimeField(blank=False, default=timezone.now)
     winner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="winner")
+    image_height = models.PositiveIntegerField(null=True, blank=True, editable=False, default="200")
+    image_width = models.PositiveIntegerField(null=True, blank=True, editable=False, default="200")
+
+    def __unicode__(self):
+        return "{0}".format(self.image) 
+
+        # super(Listing, self).save()
+        # image = Image.open(self.photo)
+        # (width, height) = image.size     
+        # size = ( 200, 200)
+        # image = image.resize(size, Image.ANTIALIAS)
+        # image.save(self.photo.path)
     def __str__(self):
         return f"{self.title}"
 
