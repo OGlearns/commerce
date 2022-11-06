@@ -38,31 +38,43 @@
             
             <ul  >
                 <h6>
-                    by:
+                    owner:
                     <span style="font-weight: normal; color:gray;">
                         {{ listing.user }}
                     </span>
                 </h6>
-                {% if listing.image_url %}
-                    <img class="card-img-left"style="margin:-7px 0 25px 0;max-width:100px;"src= "{{ listing.image_url.url }}" >
-                {% endif %}
-                <h4>
-                    <span>
-                        ${{ listing.price }}
-                    </span>
-                </h4>
-                <h6>
-                    Description: 
-                    <span style="font-weight: normal; color:gray;">
-                        {{ listing.details }}
-                    </span>
-                </h6>
-                <h6>
-                    Category: 
-                    <span style="font-weight: normal; color:gray;">
-                        {{ listing.category }}
-                    </span>
-                </h6>
+
+                <div class="img-border">
+
+                    {% if listing.image_url %}
+                    
+                    <img class="img-thumbnail"style="display:inline-block; height:100%; width:100%;object-fit: contain;"src= "{{ listing.image_url.url }}" >
+                    {% else %}
+                    
+                    <img class="img-thumbnail"style="display:inline-block; height:100%; width:100%;object-fit: contain;"src= "https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" >
+                    
+                    {% endif %}
+                </div>
+                <div style="display:inline;position:absolute;left:17em;bottom:1em;">
+
+                    <h6>
+                        <span>
+                            Price: ${{ listing.price }}
+                        </span>
+                    </h6>
+                    <h6>
+                        Description: 
+                        <span style="font-weight: normal; color:gray;">
+                            {{ listing.details }}
+                        </span>
+                    </h6>
+                    <h6>
+                        Category: 
+                        <span style="font-weight: normal; color:gray;">
+                            {{ listing.category }}
+                        </span>
+                    </h6>
+                </div>
             </ul>
         </div>
     </div>

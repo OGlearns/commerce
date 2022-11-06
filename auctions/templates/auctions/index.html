@@ -12,7 +12,7 @@
             {% for listing in listings %}
             
             <div class="card listing" >
-                <li >
+                <!-- <li > -->
                 
                     <h4>
                         <a href="{% url 'auctions:id' listing.id %}">
@@ -20,28 +20,32 @@
                         </a>
                     </h4>
                     
-                    <ul>
+                    <!-- <ul> -->
                         <h6>
-                            by:
+                            Owner:
                             <span style="font-weight: normal; color:gray;">
                                 {{ listing.user }}
                             </span>
                         </h6>
 
-                        {% if listing.image_url %}
-
-                            <div class="img-border">
+                        
+                        <div class="img-border">
+                                {% if listing.image_url %}
 
                                 <img class="img-thumbnail"style="display:inline-block; height:100%; width:100%;object-fit: contain;"src= "{{ listing.image_url.url }}" >
-                            </div>
-                        {% endif %}
-                        <div style="display:inline-block; position:relative;">
+                                {% else %}
+                                
+                                <img class="img-thumbnail"style="display:inline-block; height:100%; width:100%;object-fit: contain;"src= "https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" >
 
-                            <h5>
+                                {% endif %}
+                            </div>
+                        <div style="display:inline;position:absolute;left:14em;bottom:1em;">
+
+                            <h6>
                                 <span>
-                                    ${{ listing.price }}
+                                    Price: ${{ listing.price }}
                                 </span>
-                            </h5>
+                            </h6>
                             <h6>
                                 Description: 
                                 <span style="font-weight: normal; color:gray;">
@@ -55,12 +59,12 @@
                                 </span>
                             </h6>
                         </div>
-                    </ul>
+                    <!-- </ul> -->
                     
-                </li>
+                <!-- </li> -->
             </div>
             <hr>
-                {% endfor %}
+            {% endfor %}
             
             {% else %}
             
