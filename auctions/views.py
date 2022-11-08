@@ -12,7 +12,6 @@ from .models import *
 
 
 def index(request):
-    # listings = 
     return render(request, "auctions/index.html", {
         "listings": Listing.objects.filter(active=True),
         "bids" : Bid.objects.all(),
@@ -54,7 +53,7 @@ def register(request):
         confirmation = request.POST["confirmation"]
         if password != confirmation:
             return render(request, "auctions/register.html", {
-                "message": "Passwords must match."
+                "messsage": "Passwords must match."
             })
 
         # Attempt to create new user

@@ -14,8 +14,8 @@
             <div class="card listing" >
                 <!-- <li > -->
                 
-                    <h4>
-                        <a href="{% url 'auctions:id' listing.id %}">
+                    <h4 class="string">
+                        <a class="string" href="{% url 'auctions:id' listing.id %}">
                             {{ listing.title }}
                         </a>
                     </h4>
@@ -39,25 +39,24 @@
 
                                 {% endif %}
                             </div>
-                        <div style="display:inline;position:absolute;left:14em;bottom:1em;">
-
-                            <h6>
-                                <span>
-                                    Price: ${{ listing.price }}
-                                </span>
-                            </h6>
-                            <h6>
-                                Description: 
-                                <span style="font-weight: normal; color:gray;">
-                                    {{ listing.details }}
-                                </span>
-                            </h6>
-                            <h6>
-                                Category: 
-                                <span style="font-weight: normal; color:gray;">
-                                    {{ listing.category }}
-                                </span>
-                            </h6>
+                            <div style="display:inline;position:absolute;left:14em;bottom:1em;">
+                                
+                                <h6>
+                                    <span>
+                                        Price: ${{ listing.price }}
+                                    </span>
+                                </h6>
+                                <h6>
+                                    Description: 
+                                    <span style="font-weight: normal; color:gray;">
+                                        {{ listing.details }}
+                                    </span>
+                                </h6>
+                                <h6 class="string">
+                                    <span style="font-weight: normal; color:gray;font-size:smaller">
+                                        {{ listing.category }}
+                                    </span>
+                                </h6>
                         </div>
                     <!-- </ul> -->
                     

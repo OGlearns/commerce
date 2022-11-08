@@ -3,7 +3,7 @@ body {
 }
 
 .signed_in {
-    margin: -30px 0 auto auto;
+    margin: -20px 0 auto auto;
     padding:0 5px 0 5px;
     background-color: rgb(69, 69, 69);
     font-size: x-small;
@@ -24,18 +24,24 @@ body {
     margin-left:15px;
 }
 
+.app-header {
+    font-size: 100px;
+    color:#f8f8f8;
+    position:absolute;
+    z-index: -1;
+    top:-0.5em;
+}
 #listing-title {
     padding-left: 35px;
 }
 
 .nav-link {
     font-size: medium;
-    margin-top: 15px;
 }
 
 .nav-link:hover {
     font-size:medium;
-    color:rgb(127, 127, 127);
+    color:rgb(74, 77, 84);
     text-decoration: underline 3px ;
     text-underline-offset: 0.5em;
     text-decoration-color: rgb(77, 144, 252);
@@ -117,3 +123,11 @@ form {
 .img-thumbnail:hover {
     border:1px solid #dee2e6;
 }
+
+.string {
+    text-transform: lowercase; 
+    display:inline-block; 
+    text-transform: capitalize;
+}
+
+/* .string > a {text-transform: capitalize; display:inline-block;} */

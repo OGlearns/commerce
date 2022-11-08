@@ -16,7 +16,7 @@
             {{ listing.title }} 
                 <!-- watchlist button -->
 
-                <form style="margin:0px; display:inline-block; position:relative; top:-5px; left:15px;" action="{% url 'auctions:watchlist' listing.id %}">
+                <form style="margin:0px; display:inline-block; position:absolute; top:-5px; left:331px;" action="{% url 'auctions:watchlist' listing.id %}">
                     <button class="watchlist-button" type="submit" >
                         {% if listing in watchlist.listings.all %}
                             <a>

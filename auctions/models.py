@@ -44,12 +44,6 @@ class Listing(models.Model):
     def __unicode__(self):
         return "{0}".format(self.image) 
 
-        # super(Listing, self).save()
-        # image = Image.open(self.photo)
-        # (width, height) = image.size     
-        # size = ( 200, 200)
-        # image = image.resize(size, Image.ANTIALIAS)
-        # image.save(self.photo.path)
     def __str__(self):
         return f"{self.title}"
 
@@ -66,7 +60,7 @@ class Bid(models.Model):
 class WatchList(models.Model):
     listings = models.ManyToManyField(Listing, related_name="watched")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # watched = models.BooleanField(default=False, blank=False)
+
 
     def __str__(self):
         return f"{self.user}"
