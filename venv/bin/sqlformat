@@ -1,4 +1,4 @@
-#!/Users/samuelogundare/commerce/venv/bin/python
+#!/Users/samuelogundare/commerce/venv/bin/python3.10
 # -*- coding: utf-8 -*-
 import re
 import sys
