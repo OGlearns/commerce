@@ -29,7 +29,7 @@ DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['projectcommerce.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 PILLOW_VERSION = '9.4.0'
 # Application definition
